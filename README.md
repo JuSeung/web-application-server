@@ -16,6 +16,9 @@
 
 ### 요구사항 1 - http://localhost:8080/index.html로 접속시 응답
 * 
+- HttpRequestUtils.java 에서 parseTotoken java 에서 제공해주는 matches 함수를 이용해서 정규표현식으로 /index.html 만 리턴 시켜 준다.
+- RequestHandler 에서는 InputStream을 BufferedReader 객체에 보내서  readLine 함수를 이용해서 header에서 오는 String을 
+  parseTotoken 함수에 넘겨 줘서 index.html 내용을 readAllBytes 함수를 이용해서  body[] 에 넣어줘서 화면상에 뿌려 준다.
 
 ### 요구사항 2 - get 방식으로 회원가입
 * 
