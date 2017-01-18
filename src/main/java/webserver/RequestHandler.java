@@ -9,10 +9,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import model.User;
 import util.HttpRequestUtils;
 
 
@@ -21,7 +23,8 @@ public class RequestHandler extends Thread {
     private String line;
     private String url;
     private Socket connection;
-    
+    private User user;
+    private int index;
     
     public RequestHandler(Socket connectionSocket) {
         this.connection = connectionSocket;
@@ -37,11 +40,24 @@ public class RequestHandler extends Thread {
             //byte[] body = "Hello World".getBytes();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             while((line = br.readLine() )!= null ){
+            	log.debug(line);
             	if(!line.isEmpty() || line != null){
             		url = HttpRequestUtils.requsetTotoken(line);
+            		index = url.indexOf("?");
+            		if(index > 0){
+            			String requsetPath = url.substring(0,index);
+            			String param = url.substring(index+1);
+            			Map<String, String> map = HttpRequestUtils.parseQueryString(param);
+            			if(map != null){
+            				user = new User(map.get("userId"), map.get("password"),map.get("name") , map.get("email"));
+            				url = "/index.html";
+            				log.debug(user.toString());
+            			}
+            		}
             		break;
             	}
             }
+            
             byte[] body = Files.readAllBytes(new File("./webapp"+ url).toPath());
             response200Header(dos, body.length);
             responseBody(dos, body);

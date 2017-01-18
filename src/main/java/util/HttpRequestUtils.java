@@ -107,15 +107,9 @@ public class HttpRequestUtils {
         }
     }
     public static String requsetTotoken(String values){
-    	String regExpstr = "\\/[a-z]*.html";
     	String url="";
     	String[] tokens = values.split(" ");
-    	for (String token : tokens) {
-			if( token.matches(regExpstr) ){
-				url = token;
-				break;
-			}
-		}
+    	url = tokens[1];
     	return url;
     } 
     

@@ -22,6 +22,7 @@
 
 ### 요구사항 2 - get 방식으로 회원가입
 * 
+- url을 가지고 indexof 함수를 이용해 ? 있는지 확인 있으면 HttpRequestUtils 에 parseQueryString 함수 를 이용해서 param 값들을  User 엔티티에 넣어 주고 index.html 불러 주고 끝낸다.
 
 ### 요구사항 3 - post 방식으로 회원가입
 * 
